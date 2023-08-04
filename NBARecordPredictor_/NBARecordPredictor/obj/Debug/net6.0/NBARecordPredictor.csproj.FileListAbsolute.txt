@@ -1,0 +1,89 @@
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/appsettings.Development.json
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/appsettings.json
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor.exe
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor.deps.json
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor.runtimeconfig.json
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor.pdb
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/Microsoft.OpenApi.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/Swashbuckle.AspNetCore.Swagger.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.csproj.AssemblyReference.cache
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.AssemblyInfoInputs.cache
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.AssemblyInfo.cs
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.csproj.CoreCompileInputs.cache
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.MvcApplicationPartsAssemblyInfo.cs
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.MvcApplicationPartsAssemblyInfo.cache
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/staticwebassets.build.json
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/staticwebassets.development.json
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/scopedcss/bundle/NBARecordPredictor.styles.css
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.csproj.CopyComplete
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/refint/NBARecordPredictor.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.pdb
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.genruntimeconfig.cache
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/obj/Debug/net6.0/ref/NBARecordPredictor.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/CsvHelper.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/Google.Protobuf.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/Grpc.Core.Api.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/Grpc.Net.Client.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/Grpc.Net.Common.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Api.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Api.ProviderBuilderExtensions.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Exporter.Console.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Exporter.OpenTelemetryProtocol.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Extensions.Hosting.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Instrumentation.AspNetCore.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Instrumentation.Http.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Instrumentation.SqlClient.dll
+C:/Users/Ryan Babida/dev/NBARecordPredictor/NBARecordPredictor/bin/Debug/net6.0/System.Diagnostics.DiagnosticSource.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.csproj.AssemblyReference.cache
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.AssemblyInfoInputs.cache
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.AssemblyInfo.cs
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.csproj.CoreCompileInputs.cache
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.MvcApplicationPartsAssemblyInfo.cs
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.MvcApplicationPartsAssemblyInfo.cache
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/refint/NBARecordPredictor.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.pdb
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/appsettings.Development.json
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/appsettings.json
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor.deps.json
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor.runtimeconfig.json
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/NBARecordPredictor.pdb
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/CsvHelper.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/Google.Protobuf.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/Grpc.Core.Api.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/Grpc.Net.Client.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/Grpc.Net.Common.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/Microsoft.OpenApi.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Api.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Api.ProviderBuilderExtensions.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Exporter.Console.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Exporter.OpenTelemetryProtocol.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Extensions.Hosting.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Instrumentation.AspNetCore.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Instrumentation.Http.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/OpenTelemetry.Instrumentation.SqlClient.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/bin/Debug/net6.0/System.Diagnostics.DiagnosticSource.dll
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/staticwebassets/msbuild.NBARecordPredictor.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/staticwebassets/msbuild.build.NBARecordPredictor.props
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.NBARecordPredictor.props
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.NBARecordPredictor.props
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/staticwebassets.pack.json
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/staticwebassets.build.json
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/staticwebassets.development.json
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/scopedcss/bundle/NBARecordPredictor.styles.css
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.csproj.CopyComplete
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/NBARecordPredictor.genruntimeconfig.cache
+/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/Debug/net6.0/ref/NBARecordPredictor.dll
