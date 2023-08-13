@@ -40,6 +40,44 @@ namespace NBARecordPredictor.RecordDataStore
         {
             return _records;
         }
+
+        public RecordDataSet GetDataSet()
+        {
+            var dataSet = new RecordDataSet();
+
+            foreach (var record in _records)
+            {
+                dataSet.FeatureSet.Add(new List<decimal>
+                {
+                    record.Minutes,
+                    record.Points,
+                    record.FieldGoalsMade,
+                    record.FieldGoalsAttempted,
+                    record.FieldGoalPercentage,
+                    record.ThreesMade,
+                    record.ThreesAttempted,
+                    record.ThreePercentage,
+                    record.FreeThrowsMade,
+                    record.FreeThrowsAttempted,
+                    record.FreeThrowPercentage,
+                    record.OffensiveRebounds,
+                    record.DefensiveRebounds,
+                    record.Rebounds,
+                    record.Assists,
+                    record.Turnovers,
+                    record.Steals,
+                    record.Blocks,
+                    record.BlocksAgainst,
+                    record.PersonalFouls,
+                    record.PersonalFoulsAgainst,
+                    record.PlusMinus,
+                });
+
+                dataSet.TargetSet.Add(record.WinPercentage);
+            }
+
+            return dataSet;
+        }
     }
 
     public class RecordMap : ClassMap<Record>

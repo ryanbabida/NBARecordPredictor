@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iztLUwLZ0juWrVKNNV3fqTNSobDQpvwlIwAqpjwcmcdyPCH9NLiPjHB+eJpmN/KYKPKHnhiY1CqqB+bZzd2yeg==",
+  "dgSpecHash": "lzTDH26t4q7ElYH58o1eMiWKCuAodBw/x45aUCSOeU++UxkTyj81d9qHquJl5cByUgGMkfdrJ2B4wlBO4uHGKQ==",
   "success": true,
-  "projectFilePath": "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor.Test/NBARecordPredictor.Test.csproj",
+  "projectFilePath": "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor.Test/NBARecordPredictor.Test.csproj",
   "expectedPackageFiles": [
     "/Users/ryanbabida/.nuget/packages/coverlet.collector/3.1.2/coverlet.collector.3.1.2.nupkg.sha512",
     "/Users/ryanbabida/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512",

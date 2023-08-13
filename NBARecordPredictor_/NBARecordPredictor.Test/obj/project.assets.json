@@ -7694,11 +7694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor.Test/NBARecordPredictor.Test.csproj",
+      "projectUniqueName": "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor.Test/NBARecordPredictor.Test.csproj",
       "projectName": "NBARecordPredictor.Test",
-      "projectPath": "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor.Test/NBARecordPredictor.Test.csproj",
+      "projectPath": "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor.Test/NBARecordPredictor.Test.csproj",
       "packagesPath": "/Users/ryanbabida/.nuget/packages/",
-      "outputPath": "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor.Test/obj/",
+      "outputPath": "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor.Test/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/ryanbabida/.nuget/NuGet/NuGet.Config"
@@ -7714,8 +7714,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj": {
-              "projectPath": "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj"
+            "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj": {
+              "projectPath": "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj"
             }
           }
         }

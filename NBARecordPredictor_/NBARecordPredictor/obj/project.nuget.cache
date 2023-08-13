@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "v/9LwuS3BhR8l3pV1LBtmIb2f3yAR0rZHvZiIpxFncI2NZd99ndW9CScwlhVPMHvhoUmMVtnHbXrD8itEAHWPA==",
+  "dgSpecHash": "jVzmxASH+IJnfNZ2c4iZOUaYY6hOscbbNCv2QLA+byM5Xq5ETBNtMgJRVQaRzM/hLuxaSGfDkARwWvbSdkJO5A==",
   "success": true,
-  "projectFilePath": "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj",
+  "projectFilePath": "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj",
   "expectedPackageFiles": [
     "/Users/ryanbabida/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512",
     "/Users/ryanbabida/.nuget/packages/google.protobuf/3.19.4/google.protobuf.3.19.4.nupkg.sha512",

@@ -1390,11 +1390,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj",
+      "projectUniqueName": "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj",
       "projectName": "NBARecordPredictor",
-      "projectPath": "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj",
+      "projectPath": "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor/NBARecordPredictor.csproj",
       "packagesPath": "/Users/ryanbabida/.nuget/packages/",
-      "outputPath": "/Users/ryanbabida/dev/NBARecordPredictor_/NBARecordPredictor/obj/",
+      "outputPath": "/Users/ryanbabida/dev/NBARecordPredictor-CSGo/NBARecordPredictor_/NBARecordPredictor/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/ryanbabida/.nuget/NuGet/NuGet.Config"

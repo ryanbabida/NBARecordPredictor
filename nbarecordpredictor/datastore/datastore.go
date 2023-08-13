@@ -39,9 +39,15 @@ type Record struct {
 	PlusMinus            float64 `json:"plusMinus"`
 }
 
+type RecordData struct {
+	Features [][]float64 `json:"features"`
+	Results  []float64   `json:"Results"`
+}
+
 type RecordDataStore interface {
 	GetAll() ([]Record, error)
 	Get(years []string) ([]Record, error)
+	GetDataSet() (RecordData, error)
 }
 
 type CSVStore struct {
@@ -75,6 +81,44 @@ func (c *CSVStore) Get(years []string) ([]Record, error) {
 	}
 
 	return records, nil
+}
+
+func (c *CSVStore) GetDataSet() (RecordData, error) {
+	featuresSet := [][]float64{}
+	resultsSet := []float64{}
+	for _, recordsByYear := range c.records {
+		for _, r := range recordsByYear {
+			resultsSet = append(resultsSet, r.WinPercentage)
+
+			features := []float64{
+				r.Minutes,
+				r.Points,
+				r.FieldGoalsMade,
+				r.FieldGoalsAttempted,
+				r.FieldGoalPercentage,
+				r.ThreesMade,
+				r.ThreesAttempted,
+				r.ThreePercentage,
+				r.FreeThrowsMade,
+				r.FreeThrowsAttempted,
+				r.FreeThrowPercentage,
+				r.OffensiveRebounds,
+				r.DefensiveRebounds,
+				r.Rebounds,
+				r.Assists,
+				r.Turnovers,
+				r.Steals,
+				r.Blocks,
+				r.BlocksAgainst,
+				r.PersonalFouls,
+				r.PersonalFoulsAgainst,
+				r.PlusMinus,
+			}
+
+			featuresSet = append(featuresSet, features)
+		}
+	}
+	return RecordData{Features: featuresSet, Results: resultsSet}, nil
 }
 
 func NewCSVStore(directoryPath string) (*CSVStore, error) {
@@ -143,168 +187,68 @@ func readCSV(filepath string) ([]Record, error) {
 	return records, nil
 }
 
+type columnIdxMap[T int | float64] struct {
+	column      string
+	idx         int
+	valToAssign *T
+}
+
 func parseRecord(row string) (Record, error) {
 	r := strings.Split(row, ",")
 	if len(r) <= 2 || r[0] == "GP" {
 		return Record{}, fmt.Errorf("parseRecord: invalid row")
 	}
 
-	gamesPlayed, err := strconv.Atoi(r[0])
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read games played '%s': %w", r[0], err)
+	rec := Record{}
+	intColumnIdxMap := []columnIdxMap[int]{
+		{"Games Played", 0, &rec.GamesPlayed},
+		{"Wins", 1, &rec.Wins},
+		{"Losses", 2, &rec.Losses},
 	}
 
-	wins, err := strconv.Atoi(r[1])
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read wins '%s': %w", r[1], err)
+	for _, idxMap := range intColumnIdxMap {
+		v, err := strconv.Atoi(r[idxMap.idx])
+		if err != nil {
+			return Record{}, fmt.Errorf("parseRecord - cannot read '%s' ('%d'): %w", idxMap.column, v, err)
+		}
+
+		*idxMap.valToAssign = v
 	}
 
-	losses, err := strconv.Atoi(r[2])
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read losses '%s': %w", r[2], err)
+	floatColumnIdxMap := []columnIdxMap[float64]{
+		{"WinPercentage", 3, &rec.WinPercentage},
+		{"Minutes", 4, &rec.Minutes},
+		{"Points", 5, &rec.Points},
+		{"FieldGoalsMade", 6, &rec.FieldGoalsMade},
+		{"FieldGoalsAttempted", 7, &rec.FieldGoalsAttempted},
+		{"FieldGoalPercentage", 8, &rec.FieldGoalPercentage},
+		{"ThreesMade", 9, &rec.ThreesMade},
+		{"Threes ttempted", 10, &rec.ThreesAttempted},
+		{"ThreePercentage", 11, &rec.ThreePercentage},
+		{"FreeThrows Made", 12, &rec.FreeThrowsMade},
+		{"FreeThrowsAttempted", 13, &rec.FreeThrowsAttempted},
+		{"FreeThrowPercentage", 14, &rec.FreeThrowPercentage},
+		{"OffensiveRebounds", 15, &rec.OffensiveRebounds},
+		{"DefensiveRebounds", 16, &rec.DefensiveRebounds},
+		{"Rebounds", 17, &rec.Rebounds},
+		{"Assists", 18, &rec.Assists},
+		{"Turnovers", 19, &rec.Turnovers},
+		{"Steals", 20, &rec.Steals},
+		{"Blocks", 21, &rec.Blocks},
+		{"BlocksAgainst", 22, &rec.BlocksAgainst},
+		{"Personal Fouls", 23, &rec.PersonalFouls},
+		{"Personal Fouls Against", 24, &rec.PersonalFoulsAgainst},
+		{"PlusMinus", 25, &rec.PlusMinus},
 	}
 
-	winPercentage, err := strconv.ParseFloat(r[3], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read win percentage '%s': %w", r[3], err)
+	for _, idxMap := range floatColumnIdxMap {
+		v, err := strconv.ParseFloat(r[idxMap.idx], 64)
+		if err != nil {
+			return Record{}, fmt.Errorf("parseRecord - cannot read '%s' ('%f'): %w", idxMap.column, v, err)
+		}
+
+		*idxMap.valToAssign = v
 	}
 
-	minutes, err := strconv.ParseFloat(r[4], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read minutes '%s': %w", r[4], err)
-	}
-
-	points, err := strconv.ParseFloat(r[5], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read points '%s': %w", r[5], err)
-	}
-
-	fieldGoalsMade, err := strconv.ParseFloat(r[6], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read field goals made '%s': %w", r[6], err)
-	}
-
-	fieldGoalsAttempted, err := strconv.ParseFloat(r[7], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read field goals attempted '%s': %w", r[7], err)
-	}
-
-	fieldGoalPercentage, err := strconv.ParseFloat(r[8], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read field goal percentage '%s': %w", r[8], err)
-	}
-
-	threesMade, err := strconv.ParseFloat(r[9], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read threes made '%s': %w", r[9], err)
-	}
-
-	threesAttempted, err := strconv.ParseFloat(r[10], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read win threes attempted '%s': %w", r[10], err)
-	}
-
-	threePercentage, err := strconv.ParseFloat(r[11], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read three percentage '%s': %w", r[11], err)
-	}
-
-	freeThrowsMade, err := strconv.ParseFloat(r[12], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read free throws made '%s': %w", r[12], err)
-	}
-
-	freeThrowsAttempted, err := strconv.ParseFloat(r[13], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read free throws attempted '%s': %w", r[13], err)
-	}
-
-	freeThrowPercentage, err := strconv.ParseFloat(r[14], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read free throws percentage '%s': %w", r[14], err)
-	}
-
-	offensiveRebounds, err := strconv.ParseFloat(r[15], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read offensive rebounds '%s': %w", r[15], err)
-	}
-
-	defensiveRebounds, err := strconv.ParseFloat(r[16], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read defensive rebounds '%s': %w", r[16], err)
-	}
-
-	rebounds, err := strconv.ParseFloat(r[17], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read rebounds '%s': %w", r[17], err)
-	}
-
-	assists, err := strconv.ParseFloat(r[18], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read assists '%s': %w", r[18], err)
-	}
-
-	turnovers, err := strconv.ParseFloat(r[19], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read turnovers '%s': %w", r[19], err)
-	}
-
-	steals, err := strconv.ParseFloat(r[20], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read steals '%s': %w", r[20], err)
-	}
-
-	blocks, err := strconv.ParseFloat(r[21], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read blocks '%s': %w", r[21], err)
-	}
-
-	blocksAgainst, err := strconv.ParseFloat(r[22], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read blocks against '%s': %w", r[22], err)
-	}
-
-	personalFouls, err := strconv.ParseFloat(r[23], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read personal fouls '%s': %w", r[23], err)
-	}
-
-	personalFoulsAgainst, err := strconv.ParseFloat(r[24], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read personal fouls against '%s': %w", r[24], err)
-	}
-
-	plusMinus, err := strconv.ParseFloat(r[25], 64)
-	if err != nil {
-		return Record{}, fmt.Errorf("parseRecord - cannot read plus/minus '%s': %w", r[25], err)
-	}
-
-	return Record{
-		GamesPlayed:          gamesPlayed,
-		Wins:                 wins,
-		Losses:               losses,
-		WinPercentage:        winPercentage,
-		Minutes:              minutes,
-		Points:               points,
-		FieldGoalsMade:       fieldGoalsMade,
-		FieldGoalsAttempted:  fieldGoalsAttempted,
-		FieldGoalPercentage:  fieldGoalPercentage,
-		ThreesMade:           threesMade,
-		ThreesAttempted:      threesAttempted,
-		ThreePercentage:      threePercentage,
-		FreeThrowsMade:       freeThrowsMade,
-		FreeThrowsAttempted:  freeThrowsAttempted,
-		FreeThrowPercentage:  freeThrowPercentage,
-		OffensiveRebounds:    offensiveRebounds,
-		DefensiveRebounds:    defensiveRebounds,
-		Rebounds:             rebounds,
-		Assists:              assists,
-		Turnovers:            turnovers,
-		Steals:               steals,
-		Blocks:               blocks,
-		BlocksAgainst:        blocksAgainst,
-		PersonalFouls:        personalFouls,
-		PersonalFoulsAgainst: personalFoulsAgainst,
-		PlusMinus:            plusMinus,
-	}, nil
+	return rec, nil
 }

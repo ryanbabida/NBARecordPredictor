@@ -20,5 +20,11 @@ namespace NBARecordPredictor.Controllers
         {
             return _recordDataStore.GetAll();
         }
+
+        [HttpGet("data")]
+        public RecordDataSet GetDataSet()
+        {
+            return _recordDataStore.GetDataSet();
+        }
     }
 }

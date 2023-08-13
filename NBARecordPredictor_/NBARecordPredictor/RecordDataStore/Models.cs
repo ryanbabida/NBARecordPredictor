@@ -29,4 +29,16 @@
         public decimal PersonalFoulsAgainst { get; set; }
         public decimal PlusMinus { get; set; }
     }
+
+    public class RecordDataSet
+    {
+        public List<List<decimal>> FeatureSet { get; set; }
+        public List<decimal> TargetSet { get; set; }
+
+        public RecordDataSet()
+        {
+            FeatureSet = new List<List<decimal>>();
+            TargetSet = new List<decimal>();
+        }
+    }
 }
