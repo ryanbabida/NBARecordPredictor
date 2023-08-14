@@ -12,8 +12,23 @@ import (
 	"github.com/ryanbabida/nba-record-predictor-go/datastore"
 )
 
-type RecordsAPI struct {
+type recordsAPI struct {
 	Datastore datastore.RecordDataStore
+	Router    *mux.Router
+}
+
+func NewRecordsAPI(datastore datastore.RecordDataStore) *recordsAPI {
+	a := &recordsAPI{Datastore: datastore, Router: mux.NewRouter()}
+
+	a.Router.HandleFunc("/records", MakeHandlerFunc(a.GetAllRecords)).Methods("GET")
+	a.Router.HandleFunc("/records/{year}", MakeHandlerFunc(a.GetRecordsByYear)).Methods("GET")
+	a.Router.HandleFunc("/data", MakeHandlerFunc(a.GetRawDataSet)).Methods("GET")
+
+	return a
+}
+
+func (a *recordsAPI) Start() {
+	http.ListenAndServe(":3000", a.Router)
 }
 
 type ApiError struct {
@@ -54,7 +69,7 @@ func MakeHandlerFunc[T any](f func(w http.ResponseWriter, r *http.Request) (T, *
 	})
 }
 
-func (a *RecordsAPI) GetAllRecords(w http.ResponseWriter, r *http.Request) ([]datastore.Record, *ApiError) {
+func (a *recordsAPI) GetAllRecords(w http.ResponseWriter, r *http.Request) ([]datastore.Record, *ApiError) {
 	records, err := a.Datastore.GetAll()
 	if err != nil {
 		e := fmt.Errorf("GetAllRecords: %w", err)
@@ -64,7 +79,7 @@ func (a *RecordsAPI) GetAllRecords(w http.ResponseWriter, r *http.Request) ([]da
 	return records, nil
 }
 
-func (a *RecordsAPI) GetRecordsByYear(w http.ResponseWriter, r *http.Request) ([]datastore.Record, *ApiError) {
+func (a *recordsAPI) GetRecordsByYear(w http.ResponseWriter, r *http.Request) ([]datastore.Record, *ApiError) {
 	vars := mux.Vars(r)
 	year, err := strconv.Atoi(vars["year"])
 	if err != nil {
@@ -83,7 +98,7 @@ func (a *RecordsAPI) GetRecordsByYear(w http.ResponseWriter, r *http.Request) ([
 	return records, nil
 }
 
-func (a *RecordsAPI) GetRawDataSet(w http.ResponseWriter, r *http.Request) (datastore.RecordData, *ApiError) {
+func (a *recordsAPI) GetRawDataSet(w http.ResponseWriter, r *http.Request) (datastore.RecordData, *ApiError) {
 	data, err := a.Datastore.GetDataSet()
 	if err != nil {
 		e := fmt.Errorf("GetRawDataSet: %w", err)

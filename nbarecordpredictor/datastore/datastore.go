@@ -41,7 +41,7 @@ type Record struct {
 
 type RecordData struct {
 	Features [][]float64 `json:"features"`
-	Results  []float64   `json:"Results"`
+	Results  []float64   `json:"results"`
 }
 
 type RecordDataStore interface {
@@ -50,12 +50,12 @@ type RecordDataStore interface {
 	GetDataSet() (RecordData, error)
 }
 
-type CSVStore struct {
+type csvStore struct {
 	files   map[string]string
 	records map[string][]Record
 }
 
-func (c *CSVStore) GetAll() ([]Record, error) {
+func (c *csvStore) GetAll() ([]Record, error) {
 	if c == nil || len(c.records) == 0 {
 		return []Record{}, fmt.Errorf("datastore.GetAll: CSV datastore not initialized properly")
 	}
@@ -68,7 +68,7 @@ func (c *CSVStore) GetAll() ([]Record, error) {
 	return records, nil
 }
 
-func (c *CSVStore) Get(years []string) ([]Record, error) {
+func (c *csvStore) Get(years []string) ([]Record, error) {
 	if c == nil || len(c.records) == 0 {
 		return []Record{}, fmt.Errorf("datastore.Get: CSV datastore not initialized properly")
 	}
@@ -83,7 +83,7 @@ func (c *CSVStore) Get(years []string) ([]Record, error) {
 	return records, nil
 }
 
-func (c *CSVStore) GetDataSet() (RecordData, error) {
+func (c *csvStore) GetDataSet() (RecordData, error) {
 	featuresSet := [][]float64{}
 	resultsSet := []float64{}
 	for _, recordsByYear := range c.records {
@@ -121,7 +121,7 @@ func (c *CSVStore) GetDataSet() (RecordData, error) {
 	return RecordData{Features: featuresSet, Results: resultsSet}, nil
 }
 
-func NewCSVStore(directoryPath string) (*CSVStore, error) {
+func NewCSVStore(directoryPath string) (*csvStore, error) {
 	f := map[string]string{
 		"1997": "1996-1997.csv",
 		"1998": "1997-1998.csv",
@@ -157,7 +157,7 @@ func NewCSVStore(directoryPath string) (*CSVStore, error) {
 		records[year] = rows
 	}
 
-	return &CSVStore{f, records}, nil
+	return &csvStore{f, records}, nil
 }
 
 func readCSV(filepath string) ([]Record, error) {
