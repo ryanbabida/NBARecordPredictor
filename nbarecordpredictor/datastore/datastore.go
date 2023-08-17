@@ -55,6 +55,8 @@ type csvStore struct {
 	records map[string][]Record
 }
 
+var _ RecordDataStore = (*csvStore)(nil)
+
 func (c *csvStore) GetAll() ([]Record, error) {
 	if c == nil || len(c.records) == 0 {
 		return []Record{}, fmt.Errorf("datastore.GetAll: CSV datastore not initialized properly")

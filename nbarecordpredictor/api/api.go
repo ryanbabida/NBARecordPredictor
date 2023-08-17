@@ -10,19 +10,21 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/ryanbabida/nba-record-predictor-go/datastore"
+	"golang.org/x/exp/slog"
 )
 
 type recordsAPI struct {
 	Datastore datastore.RecordDataStore
 	Router    *mux.Router
+	Logger    *slog.Logger
 }
 
-func NewRecordsAPI(datastore datastore.RecordDataStore) *recordsAPI {
-	a := &recordsAPI{Datastore: datastore, Router: mux.NewRouter()}
+func NewRecordsAPI(datastore datastore.RecordDataStore, logger *slog.Logger) *recordsAPI {
+	a := &recordsAPI{Datastore: datastore, Logger: logger, Router: mux.NewRouter()}
 
-	a.Router.HandleFunc("/records", MakeHandlerFunc(a.GetAllRecords)).Methods("GET")
-	a.Router.HandleFunc("/records/{year}", MakeHandlerFunc(a.GetRecordsByYear)).Methods("GET")
-	a.Router.HandleFunc("/data", MakeHandlerFunc(a.GetRawDataSet)).Methods("GET")
+	a.Router.HandleFunc("/records", MakeHandlerFunc(a.GetAllRecords, a.Logger)).Methods("GET")
+	a.Router.HandleFunc("/records/{year}", MakeHandlerFunc(a.GetRecordsByYear, a.Logger)).Methods("GET")
+	a.Router.HandleFunc("/data", MakeHandlerFunc(a.GetRawDataSet, a.Logger)).Methods("GET")
 
 	return a
 }
@@ -53,14 +55,18 @@ func WriteJSON(w http.ResponseWriter, data any, errorMessage string, statusCode 
 	json.NewEncoder(w).Encode(res)
 }
 
-func MakeHandlerFunc[T any](f func(w http.ResponseWriter, r *http.Request) (T, *ApiError)) http.HandlerFunc {
+func MakeHandlerFunc[T any](f func(w http.ResponseWriter, r *http.Request) (T, *ApiError), logger *slog.Logger) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		startTime := time.Now()
-		defer log.Println("Request URI: ", r.RequestURI, "Duration: ", time.Since(startTime).Nanoseconds())
+		defer log.Println("Request URI: ", r.RequestURI, "Duration: ", time.Since(startTime).Milliseconds())
 
 		v, err := f(w, r)
 		if err != nil {
-			log.Println(err)
+			logger.Error(
+				"Error occurred",
+				"internalMessage", err.internalMessage,
+				"statusCode", err.statusCode,
+				"userFriendlyMessage", err.userFriendlyMessage)
 			WriteJSON(w, v, err.userFriendlyMessage, err.statusCode)
 			return
 		}
@@ -83,10 +89,10 @@ func (a *recordsAPI) GetRecordsByYear(w http.ResponseWriter, r *http.Request) ([
 	vars := mux.Vars(r)
 	year, err := strconv.Atoi(vars["year"])
 	if err != nil {
-		return []datastore.Record{}, &ApiError{userFriendlyMessage: "unable to parse year", statusCode: 500}
+		return []datastore.Record{}, &ApiError{userFriendlyMessage: "unable to parse year", statusCode: 400}
 	}
 	if year < 1996 || year > 2018 {
-		return []datastore.Record{}, &ApiError{userFriendlyMessage: "invalid year", statusCode: 500}
+		return []datastore.Record{}, &ApiError{userFriendlyMessage: "invalid year", statusCode: 400}
 	}
 
 	records, err := a.Datastore.Get([]string{vars["year"]})
