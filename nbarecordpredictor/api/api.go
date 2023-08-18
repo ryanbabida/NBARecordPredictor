@@ -94,7 +94,7 @@ func (a *recordsAPI) GetRecordsByYear(w http.ResponseWriter, r *http.Request) {
 	}
 	if year < 1996 || year > 2018 {
 		e := fmt.Errorf("GetRecordsByYear - invalid year")
-		a.WriteError(w, e, "invalid year, year must be betwen [1996, 2018]", http.StatusBadRequest)
+		a.WriteError(w, e, "invalid year, year must be between [1996, 2018]", http.StatusBadRequest)
 		return
 	}
 

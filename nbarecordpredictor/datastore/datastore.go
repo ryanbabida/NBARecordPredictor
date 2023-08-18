@@ -3,7 +3,6 @@ package datastore
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -177,7 +176,6 @@ func readCSV(filepath string) ([]Record, error) {
 	for fileScanner.Scan() {
 		record, err := parseRecord(fileScanner.Text())
 		if err != nil {
-			log.Println(err)
 			continue
 		}
 
