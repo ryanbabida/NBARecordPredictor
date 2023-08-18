@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -22,94 +21,99 @@ type recordsAPI struct {
 func NewRecordsAPI(datastore datastore.RecordDataStore, logger *slog.Logger) *recordsAPI {
 	a := &recordsAPI{Datastore: datastore, Logger: logger, Router: mux.NewRouter()}
 
-	a.Router.HandleFunc("/records", MakeHandlerFunc(a.GetAllRecords, a.Logger)).Methods("GET")
-	a.Router.HandleFunc("/records/{year}", MakeHandlerFunc(a.GetRecordsByYear, a.Logger)).Methods("GET")
-	a.Router.HandleFunc("/data", MakeHandlerFunc(a.GetRawDataSet, a.Logger)).Methods("GET")
+	a.Router.HandleFunc("/records", a.GetAllRecords).Methods("GET")
+	a.Router.HandleFunc("/records/{year}", a.GetRecordsByYear).Methods("GET")
+	a.Router.HandleFunc("/data", a.GetRawDataSet).Methods("GET")
 
 	return a
 }
 
 func (a *recordsAPI) Start() {
-	http.ListenAndServe(":3000", a.Router)
-}
-
-type ApiError struct {
-	internalMessage     error
-	userFriendlyMessage string
-	statusCode          int
+	m := http.TimeoutHandler(a.Router, time.Second*5, "request exceeded timeout")
+	http.ListenAndServe(":3000", m)
 }
 
 type recordsAPIResponse struct {
-	Data         any    `json:"data"`
-	ErrorMessage string `json:"errorMessage"`
-	StatusCode   int    `json:"statusCode"`
+	Data       any `json:"data"`
+	StatusCode int `json:"statusCode"`
 }
 
-func WriteJSON(w http.ResponseWriter, data any, errorMessage string, statusCode int) {
+type recordsAPIError struct {
+	Message    string `json:"message"`
+	StatusCode int    `json:"statusCode"`
+}
+
+func WriteJSON(w http.ResponseWriter, data any, statusCode int) {
+	w.Header().Set("Content-Type", "application/json")
+
 	res := recordsAPIResponse{
-		Data:         data,
-		ErrorMessage: errorMessage,
-		StatusCode:   statusCode,
+		Data:       data,
+		StatusCode: statusCode,
 	}
 
+	w.WriteHeader(statusCode)
 	json.NewEncoder(w).Encode(res)
 }
 
-func MakeHandlerFunc[T any](f func(w http.ResponseWriter, r *http.Request) (T, *ApiError), logger *slog.Logger) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		startTime := time.Now()
-		defer log.Println("Request URI: ", r.RequestURI, "Duration: ", time.Since(startTime).Milliseconds())
+func (a *recordsAPI) WriteError(w http.ResponseWriter, err error, message string, statusCode int) {
+	a.Logger.Error(
+		"Error occurred",
+		"internalMessage", err,
+		"statusCode", statusCode,
+		"userFriendlyMessage", message)
 
-		v, err := f(w, r)
-		if err != nil {
-			logger.Error(
-				"Error occurred",
-				"internalMessage", err.internalMessage,
-				"statusCode", err.statusCode,
-				"userFriendlyMessage", err.userFriendlyMessage)
-			WriteJSON(w, v, err.userFriendlyMessage, err.statusCode)
-			return
-		}
-
-		WriteJSON(w, v, "", 200)
-	})
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(statusCode)
+	res := recordsAPIError{
+		Message:    message,
+		StatusCode: statusCode,
+	}
+	json.NewEncoder(w).Encode(res)
 }
 
-func (a *recordsAPI) GetAllRecords(w http.ResponseWriter, r *http.Request) ([]datastore.Record, *ApiError) {
+func (a *recordsAPI) GetAllRecords(w http.ResponseWriter, r *http.Request) {
 	records, err := a.Datastore.GetAll()
+	time.Sleep(time.Second * 10)
 	if err != nil {
 		e := fmt.Errorf("GetAllRecords: %w", err)
-		return []datastore.Record{}, &ApiError{internalMessage: e, userFriendlyMessage: "Unable to get all records", statusCode: 500}
+		a.WriteError(w, e, "unable to get records", http.StatusInternalServerError)
+		return
 	}
 
-	return records, nil
+	WriteJSON(w, records, http.StatusOK)
 }
 
-func (a *recordsAPI) GetRecordsByYear(w http.ResponseWriter, r *http.Request) ([]datastore.Record, *ApiError) {
+func (a *recordsAPI) GetRecordsByYear(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	year, err := strconv.Atoi(vars["year"])
 	if err != nil {
-		return []datastore.Record{}, &ApiError{userFriendlyMessage: "unable to parse year", statusCode: 400}
+		e := fmt.Errorf("GetRecordsByYear - unable to parse year: %w", err)
+		a.WriteError(w, e, "unable to parse year", http.StatusBadRequest)
+		return
 	}
 	if year < 1996 || year > 2018 {
-		return []datastore.Record{}, &ApiError{userFriendlyMessage: "invalid year", statusCode: 400}
+		e := fmt.Errorf("GetRecordsByYear - invalid year")
+		a.WriteError(w, e, "invalid year, year must be betwen [1996, 2018]", http.StatusBadRequest)
+		return
 	}
 
 	records, err := a.Datastore.Get([]string{vars["year"]})
 	if err != nil {
 		e := fmt.Errorf("GetRecordsByYear: %w", err)
-		return []datastore.Record{}, &ApiError{internalMessage: e, userFriendlyMessage: "Unable to get records by year", statusCode: 500}
+		a.WriteError(w, e, "unable to get records by year", http.StatusInternalServerError)
+		return
 	}
 
-	return records, nil
+	WriteJSON(w, records, http.StatusOK)
 }
 
-func (a *recordsAPI) GetRawDataSet(w http.ResponseWriter, r *http.Request) (datastore.RecordData, *ApiError) {
+func (a *recordsAPI) GetRawDataSet(w http.ResponseWriter, r *http.Request) {
 	data, err := a.Datastore.GetDataSet()
 	if err != nil {
 		e := fmt.Errorf("GetRawDataSet: %w", err)
-		return datastore.RecordData{}, &ApiError{internalMessage: e, userFriendlyMessage: "Unable to get data set", statusCode: 500}
+		a.WriteError(w, e, "unable to get raw data set", http.StatusInternalServerError)
+		return
 	}
 
-	return data, nil
+	WriteJSON(w, data, http.StatusOK)
 }
