@@ -50,7 +50,6 @@ type RecordDataStore interface {
 }
 
 type csvStore struct {
-	files   map[string]string
 	records map[string][]Record
 }
 
@@ -122,34 +121,10 @@ func (c *csvStore) GetDataSet() (RecordData, error) {
 	return RecordData{Features: featuresSet, Results: resultsSet}, nil
 }
 
-func NewCSVStore(directoryPath string) (*csvStore, error) {
-	f := map[string]string{
-		"1997": "1996-1997.csv",
-		"1998": "1997-1998.csv",
-		"1999": "1998-1999.csv",
-		"2000": "1999-2000.csv",
-		"2001": "2000-2001.csv",
-		"2002": "2001-2002.csv",
-		"2003": "2002-2003.csv",
-		"2004": "2003-2004.csv",
-		"2005": "2004-2005.csv",
-		"2006": "2005-2006.csv",
-		"2007": "2006-2007.csv",
-		"2008": "2007-2008.csv",
-		"2009": "2008-2009.csv",
-		"2010": "2009-2010.csv",
-		"2011": "2010-2011.csv",
-		"2012": "2011-2012.csv",
-		"2013": "2012-2013.csv",
-		"2014": "2013-2014.csv",
-		"2015": "2014-2015.csv",
-		"2016": "2015-2016.csv",
-		// "2017": "2016-2017.csv",
-	}
-
+func NewCSVStore(directoryPath string, files map[string]string) (*csvStore, error) {
 	records := map[string][]Record{}
 
-	for year, filename := range f {
+	for year, filename := range files {
 		rows, err := readCSV(directoryPath + filename)
 		if err != nil {
 			return nil, fmt.Errorf("NewCSVStore: %w", err)
@@ -158,7 +133,7 @@ func NewCSVStore(directoryPath string) (*csvStore, error) {
 		records[year] = rows
 	}
 
-	return &csvStore{f, records}, nil
+	return &csvStore{records}, nil
 }
 
 func readCSV(filepath string) ([]Record, error) {

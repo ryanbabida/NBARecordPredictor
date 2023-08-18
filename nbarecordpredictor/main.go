@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/ryanbabida/nba-record-predictor/api"
@@ -19,12 +20,18 @@ func main() {
 		panic(err)
 	}
 
-	datastore, err := datastore.NewCSVStore("data/")
+	datastore, err := datastore.NewCSVStore(config.DataStore.Filepath, config.DataStore.Files)
 	if err != nil {
 		logger.Error(err.Error())
 		panic(err)
 	}
 
+	fmt.Println("Starting server...")
+
 	a := api.NewRecordsAPI(datastore, config, logger)
+
+	fmt.Printf("live at http://localhost%s\n", config.Server.Port)
+
 	a.Start()
+
 }
