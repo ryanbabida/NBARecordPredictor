@@ -8,18 +8,20 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/ryanbabida/nba-record-predictor-go/datastore"
+	"github.com/ryanbabida/nba-record-predictor/config"
+	"github.com/ryanbabida/nba-record-predictor/datastore"
 	"golang.org/x/exp/slog"
 )
 
 type recordsAPI struct {
 	Datastore datastore.RecordDataStore
-	Router    *mux.Router
+	Config    *config.Config
 	Logger    *slog.Logger
+	Router    *mux.Router
 }
 
-func NewRecordsAPI(datastore datastore.RecordDataStore, logger *slog.Logger) *recordsAPI {
-	a := &recordsAPI{Datastore: datastore, Logger: logger, Router: mux.NewRouter()}
+func NewRecordsAPI(datastore datastore.RecordDataStore, config *config.Config, logger *slog.Logger) *recordsAPI {
+	a := &recordsAPI{Datastore: datastore, Config: config, Logger: logger, Router: mux.NewRouter()}
 
 	a.Router.HandleFunc("/records", a.GetAllRecords).Methods("GET")
 	a.Router.HandleFunc("/records/{year}", a.GetRecordsByYear).Methods("GET")
@@ -29,8 +31,8 @@ func NewRecordsAPI(datastore datastore.RecordDataStore, logger *slog.Logger) *re
 }
 
 func (a *recordsAPI) Start() {
-	m := http.TimeoutHandler(a.Router, time.Second*5, "request exceeded timeout")
-	http.ListenAndServe(":3000", m)
+	m := http.TimeoutHandler(a.Router, time.Second*time.Duration(a.Config.Server.TimeoutInSeconds), "request exceeded timeout")
+	http.ListenAndServe(a.Config.Server.Port, m)
 }
 
 type recordsAPIResponse struct {
@@ -73,7 +75,6 @@ func (a *recordsAPI) WriteError(w http.ResponseWriter, err error, message string
 
 func (a *recordsAPI) GetAllRecords(w http.ResponseWriter, r *http.Request) {
 	records, err := a.Datastore.GetAll()
-	time.Sleep(time.Second * 10)
 	if err != nil {
 		e := fmt.Errorf("GetAllRecords: %w", err)
 		a.WriteError(w, e, "unable to get records", http.StatusInternalServerError)

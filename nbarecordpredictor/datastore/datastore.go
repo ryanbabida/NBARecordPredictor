@@ -198,7 +198,7 @@ type columnIdxMap[T int | float64] struct {
 func parseRecord(row string) (Record, error) {
 	r := strings.Split(row, ",")
 	if len(r) <= 2 || r[0] == "GP" {
-		return Record{}, fmt.Errorf("parseRecord: invalid row")
+		return Record{}, fmt.Errorf("parseRecord: invalid row: %v", r)
 	}
 
 	rec := Record{}
